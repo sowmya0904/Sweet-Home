@@ -1,7 +1,7 @@
 package com.upgrad.Booking.utils;
 
 import com.upgrad.Booking.entities.Booking;
-import com.upgrad.Booking.models.responseentities.BookingInfoEntity;
+import com.upgrad.Booking.models.BookingInfoEntity;
 
 
 public class POJOConvertor {

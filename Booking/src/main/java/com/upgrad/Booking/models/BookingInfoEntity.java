@@ -1,4 +1,4 @@
-package com.upgrad.Booking.models.responseentities;
+package com.upgrad.Booking.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
