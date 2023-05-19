@@ -51,10 +51,10 @@ public class BookingController {
                 return new ResponseEntity(invalidBookingId, HttpStatus.BAD_REQUEST);
 
             }
-            Transaction transactionToBeMade = modelMapper.map(transactionDTO, Transaction.class);
-            Booking transactionSucess = bookingService.transactionSuccess(transactionToBeMade);
+           // Transaction transactionToBeMade = modelMapper.map(transactionDTO, Transaction.class);
+            Booking transactionSucess = bookingService.transactionSuccess(transactionDTO);
             BookingInfoEntity roomsBooked = POJOConvertor.covertBookingEntityToBookingInfoEntity(transactionSucess);
-            return new ResponseEntity(roomsBooked, HttpStatus.OK);
+            return new ResponseEntity(roomsBooked, HttpStatus.CREATED);
         } else {
             InvalidTransactionDetailsException invalidCardDetails = InvalidTransactionDetailsException.builder()
                     .message("Invalid mode of payment")

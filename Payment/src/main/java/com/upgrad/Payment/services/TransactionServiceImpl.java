@@ -2,13 +2,9 @@ package com.upgrad.Payment.services;
 
 
 import com.upgrad.Payment.entities.Transaction;
-import com.upgrad.Payment.model.TransactionInfoEntity;
 import com.upgrad.Payment.repository.TransactionRepo;
-import com.upgrad.Payment.utils.POJOConvertor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class TransactionServiceImpl implements TransactionService{

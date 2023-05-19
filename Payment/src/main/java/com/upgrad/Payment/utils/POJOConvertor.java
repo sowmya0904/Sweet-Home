@@ -1,13 +1,13 @@
 package com.upgrad.Payment.utils;
 
 import com.upgrad.Payment.entities.Transaction;
-import com.upgrad.Payment.model.TransactionInfoEntity;
+import com.upgrad.Payment.model.TransactionDetailsEntity;
 
 
 public class POJOConvertor {
 
-  public static TransactionInfoEntity covertTransactionEntityToTransactionInfoEntity(Transaction transaction) {
-    TransactionInfoEntity transactionInfoEntity=TransactionInfoEntity.builder()
+  public static TransactionDetailsEntity covertTransactionEntityToTransactionInfoEntity(Transaction transaction) {
+    TransactionDetailsEntity transactionDetailsEntity = TransactionDetailsEntity.builder()
             .id(transaction.getTransactionId())
             .upiId(transaction.getUpiId())
             .paymentMode(transaction.getPaymentMode())
@@ -15,6 +15,6 @@ public class POJOConvertor {
             .cardNumber(transaction.getCardNumber())
             .build();
 
-    return transactionInfoEntity;
+    return transactionDetailsEntity;
   }
 }

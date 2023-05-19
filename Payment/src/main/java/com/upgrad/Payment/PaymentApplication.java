@@ -13,10 +13,10 @@ public class PaymentApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PaymentApplication.class, args);
 	}
-//	@Bean
-//	public ModelMapper modelMapper() {
-//		return new ModelMapper();
-//	}
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
 
 //	@Bean
 //	@LoadBalanced

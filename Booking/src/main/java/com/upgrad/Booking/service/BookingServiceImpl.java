@@ -1,5 +1,6 @@
 package com.upgrad.Booking.service;
 
+import com.upgrad.Booking.dto.TransactionDTO;
 import com.upgrad.Booking.entities.Booking;
 import com.upgrad.Booking.entities.Transaction;
 import com.upgrad.Booking.repository.BookingRepo;
@@ -52,14 +53,17 @@ public class BookingServiceImpl implements BookingService{
     }
 
     @Override
-    public Booking transactionSuccess(Transaction transaction) {
+    public Booking transactionSuccess(TransactionDTO transaction) {
+        int transactionId = restTemplate.postForObject(transactionAppUrl,transaction,Integer.class);
 
-        Map<String,Transaction> transactionUriMap = new HashMap<>();
-        transactionUriMap.put("id",transaction);
-        int transactionId = restTemplate.postForObject(transactionAppUrl,transactionUriMap,Integer.class);
         Booking paymentSuccess= bookingRepo.findById(transaction.getBookingId()).get();
         paymentSuccess.setTransactionId(transactionId);
         bookingRepo.save(paymentSuccess);
+        String message = "Booking confirmed for user with aadhaar number: "
+                + paymentSuccess.getAadharNumber()
+                +    "    |    "
+                + "Here are the booking details:    " + paymentSuccess.toString();
+        System.out.println(message);
         return paymentSuccess;
     }
 

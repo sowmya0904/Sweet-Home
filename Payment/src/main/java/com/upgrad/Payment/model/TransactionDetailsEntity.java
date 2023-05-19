@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data@NoArgsConstructor@AllArgsConstructor@Builder
-public class TransactionInfoEntity {
+public class TransactionDetailsEntity {
 
     private int id;
 
