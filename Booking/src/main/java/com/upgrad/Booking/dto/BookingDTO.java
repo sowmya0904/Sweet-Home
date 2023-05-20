@@ -19,13 +19,4 @@ public class BookingDTO {
 
     private int numOfRooms;
 
-//    private String roomNumbers;
-//
-//    private int roomPrice;
-//
-//
-//    private int transactionId;
-//
-//
-//    private Date bookedOn;
 }

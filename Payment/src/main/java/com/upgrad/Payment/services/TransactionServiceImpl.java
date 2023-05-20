@@ -12,13 +12,14 @@ public class TransactionServiceImpl implements TransactionService{
     @Autowired
     private TransactionRepo transactionRepo;
 
-
+    //Logic to save transaction data to DataBase
     @Override
     public Integer processingTransaction(Transaction transaction) {
         Transaction transactionProcessed=transactionRepo.save(transaction);
         return transactionProcessed.getTransactionId();
     }
 
+    //Logic to fetch data for a particular TransactionId from DataBase
     @Override
     public Transaction getTransactionData(int transactionId) {
        Transaction transactionData=transactionRepo.findById(transactionId).get();

@@ -18,9 +18,4 @@ public class PaymentApplication {
 		return new ModelMapper();
 	}
 
-//	@Bean
-//	@LoadBalanced
-//	public RestTemplate getRestTemplate(){
-//		return new RestTemplate();
-//	}
 }

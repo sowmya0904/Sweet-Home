@@ -14,6 +14,7 @@ import java.util.*;
 @Service
 public class BookingServiceImpl implements BookingService{
 
+    //URL of service to make a synchronous call this url is configured in application.properties and used here
     @Value("${transactionApp.url}")
     private String transactionAppUrl;
     @Autowired
@@ -25,6 +26,7 @@ public class BookingServiceImpl implements BookingService{
     @Override
     public Booking checkRoomAvailability(Booking booking) {
 
+    //Logic to calculate the no of days between the dates given
         long noOfDays=0;
         Date datefrom = booking.getFromDate();
         Date dateto = booking.getToDate();
@@ -44,6 +46,7 @@ public class BookingServiceImpl implements BookingService{
         return saveBookingDetails;
     }
 
+    //Logic to check if the passed bookingId part of payment is valid or no
     @Override
     public Boolean validateBookingId(int bookingId) {
         if(bookingRepo.findById(bookingId).isEmpty()){
@@ -52,6 +55,8 @@ public class BookingServiceImpl implements BookingService{
         return false;
     }
 
+
+    //Logic where we make synchronous call to Payment service via RestTemplate
     @Override
     public Booking transactionSuccess(TransactionDTO transaction) {
         int transactionId = restTemplate.postForObject(transactionAppUrl,transaction,Integer.class);
@@ -67,11 +72,13 @@ public class BookingServiceImpl implements BookingService{
         return paymentSuccess;
     }
 
+    //Logic to claculate price of particular No of rooms and No of Days
     public long calculateRoomPrice(int noOfDays,int noOfRooms){
        long roomPrice = 1000 * (noOfRooms * noOfDays);
         return roomPrice;
     }
 
+    //Logic to generate room numbers
     public static String getRandomNumbers(int count){
         Random rand = new Random();
         StringBuffer rooms= new StringBuffer();
@@ -89,4 +96,13 @@ public class BookingServiceImpl implements BookingService{
 
         return rooms.toString();
     }
+
+    //Logic to get data of a bookingId from Database
+    @Override
+    public Booking getBookingData(int bookingId) {
+        Booking bookingDetails=bookingRepo.findById(bookingId).get();
+        return bookingDetails;
+    }
+
+
 }

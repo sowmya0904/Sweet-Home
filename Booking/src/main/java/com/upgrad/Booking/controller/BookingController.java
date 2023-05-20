@@ -23,7 +23,10 @@ public class BookingController {
     @Autowired
     private ModelMapper modelMapper;
 
-
+    /*
+    This is a post call where user sends basic data like todate and from date and no of rooms, and as a result
+    user gets info about the price and room number with extra info too
+     */
     @PostMapping(value = "/booking",consumes = MediaType.APPLICATION_JSON_VALUE ,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getBookingDetails(@RequestBody BookingDTO bookingDTO){
@@ -34,6 +37,13 @@ public class BookingController {
         return new ResponseEntity(resultBookingInfo, HttpStatus.CREATED);
     }
 
+    /*
+    This is a post call where user is Ok with the room numbers and price and he is booking the rooms and send data
+    related to paymnets such as payment mode,upi id, card number and the booking id as a result he will get the
+    complete info of the booking along with transaction id updated.
+
+    We have hard stop rules where user have to give payment mode either UPI or CARD and also Bokking id needs to be valid
+     */
     @PostMapping(value = "/booking/{bookingId}/transaction",consumes = MediaType.APPLICATION_JSON_VALUE
     ,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity makePaymentsForRooms(@PathVariable("bookingId") int bookingId,@RequestBody TransactionDTO transactionDTO) {
@@ -50,7 +60,6 @@ public class BookingController {
                 return new ResponseEntity(invalidBookingId, HttpStatus.BAD_REQUEST);
 
             }
-           // Transaction transactionToBeMade = modelMapper.map(transactionDTO, Transaction.class);
             Booking transactionSucess = bookingService.transactionSuccess(transactionDTO);
             BookingInfoEntity roomsBooked = POJOConvertor.covertBookingEntityToBookingInfoEntity(transactionSucess);
             return new ResponseEntity(roomsBooked, HttpStatus.CREATED);
@@ -62,4 +71,17 @@ public class BookingController {
             return new ResponseEntity(invalidCardDetails, HttpStatus.BAD_REQUEST);
         }
     }
+
+    //Logic to get booking details of a specific bookingId
+    @GetMapping(value = "/booking/{bookingId}")
+    public ResponseEntity getBookingData(@PathVariable (value = "bookingId") int bookingId){
+        try {
+            Booking bookingDataForBookingId = bookingService.getBookingData(bookingId);
+            BookingInfoEntity bookingData = POJOConvertor.covertBookingEntityToBookingInfoEntity(bookingDataForBookingId);
+            return new ResponseEntity(bookingData, HttpStatus.OK);
+        }catch (Exception e){
+                return new ResponseEntity("Booking Id is Invalid please pass valid id", HttpStatus.NOT_FOUND);
+            }
+    }
+
 }

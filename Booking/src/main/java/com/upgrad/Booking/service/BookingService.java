@@ -10,4 +10,6 @@ public interface BookingService {
     Boolean validateBookingId(int bookingId);
 
     Booking transactionSuccess(TransactionDTO transaction);
+
+    Booking getBookingData(int bookingId);
 }
