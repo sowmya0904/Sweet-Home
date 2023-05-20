@@ -10,21 +10,20 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class BookingApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BookingApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BookingApplication.class, args);
+    }
 
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
-	@Bean
-	@LoadBalanced
-	public RestTemplate getRestTemplate(){
-		return new RestTemplate();
-	}
-
+    @Bean
+    @LoadBalanced
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
+    }
 
 
 }

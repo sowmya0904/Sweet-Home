@@ -13,8 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Transaction
-{
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int transactionId;

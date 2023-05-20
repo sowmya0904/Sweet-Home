@@ -29,19 +29,15 @@ public class TransactionController {
     If this end point is called manually without intervension of Booking service it just sends transaction id in
     response
      */
-    @PostMapping(value = "/transaction",consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Integer> processTransaction( @RequestBody TransactionDTO transactionDto) {
+    @PostMapping(value = "/transaction", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Integer> processTransaction(@RequestBody TransactionDTO transactionDto) {
         String paymentMode = transactionDto.getPaymentMode();
         if (paymentMode.equals("UPI") || paymentMode.equals("CARD")) {
             Transaction transaction = modelMapper.map(transactionDto, Transaction.class);
             Integer processedTransactionId = transactionService.processingTransaction(transaction);
             return new ResponseEntity(processedTransactionId, HttpStatus.CREATED);
         } else {
-            InvalidTransactionDetailsException invalidCardDetails = InvalidTransactionDetailsException.builder()
-                    .message("Invalid mode of payment")
-                    .statusCode("400")
-                    .build();
+            InvalidTransactionDetailsException invalidCardDetails = InvalidTransactionDetailsException.builder().message("Invalid mode of payment").statusCode("400").build();
             return new ResponseEntity(invalidCardDetails, HttpStatus.BAD_REQUEST);
         }
     }
@@ -51,12 +47,12 @@ public class TransactionController {
     the transaction ID and send the same as response, if id is not valid, message is displayed as result
      */
     @GetMapping(value = "transaction/{transactionId}")
-    public ResponseEntity getTransactionDetails(@PathVariable(value = "transactionId")int transactionId) {
+    public ResponseEntity getTransactionDetails(@PathVariable(value = "transactionId") int transactionId) {
         try {
             Transaction transactionData = transactionService.getTransactionData(transactionId);
             TransactionDetailsEntity transactionInfoData = POJOConvertor.covertTransactionEntityToTransactionInfoEntity(transactionData);
             return new ResponseEntity(transactionInfoData, HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity("Transaction Id is Invalid please pass valid id", HttpStatus.NOT_FOUND);
         }
     }
